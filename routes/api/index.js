@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
-const apiWineRouter = require('./wine');
-const apiUsersRouter = require('./users');
-
-router.use('/wine', apiWineRouter)
-router.use('/users', apiUsersRouter)
+router.use('/wine', require('./wine'))
+router.use('/users', require('./users'))
+router.use('/origin', require('./origin'))
+router.use('/wineCellar', require('./wineCellar'))
+router.use('/wineHasUser', require('./wineHasUser'))
 
 module.exports = router;

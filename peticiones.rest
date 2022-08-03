@@ -1,1 +1,63 @@
-GET http://localhost:3000/
+GET http://localhost:3000/api/wine
+###
+GET http://localhost:3000/api/wine/2
+###
+POST http://localhost:3000/api/wine
+Content-Type: application/json
+
+{
+  "name":"Amor",
+  "elaborationArea":"Roma",
+  "photo":"www.fffff.es",
+  "Origin_id":1,
+  "WineCellar_id":1
+}
+
+###
+
+PUT http://localhost:3000/api/wine/2
+Content-Type: application/json
+
+{
+  "name":"Amor",
+  "elaborationArea":"Florencia",
+  "photo":"www.fffff.es",
+  "Origin_id":1,
+  "WineCellar_id":1
+}
+
+###
+GET http://localhost:3000/api/wineHasUser/user/1
+
+###
+GET http://localhost:3000/api/wineHasUser/1
+
+###
+POST http://localhost:3000/api/wineHasUser
+Content-Type: application/json
+
+{
+  "Wine_id":2,
+  "User_id":1,
+  "favorite":false,
+  "taste":true
+}
+
+###
+PUT http://localhost:3000/api/wineHasUser/favorite/2
+Content-Type: application/json
+
+{
+  "favorite":true
+}
+
+###
+PUT http://localhost:3000/api/wineHasUser/taste/2
+Content-Type: application/json
+
+{
+  "taste":true
+}
+
+###
+DELETE http://localhost:3000/api/wineHasUser/5
