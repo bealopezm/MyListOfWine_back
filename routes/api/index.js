@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const apiWineRouter = reqire('./wine');
-const apiUsersRouter = reqire('./users');
+const apiWineRouter = require('./wine');
+const apiUsersRouter = require('./users');
 
 router.use('/wine', apiWineRouter)
 router.use('/users', apiUsersRouter)
