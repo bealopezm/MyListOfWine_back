@@ -1,4 +1,3 @@
-const dayjs = require('dayjs');
 const jwt = require('jsonwebtoken');
 
 // funciones refactorizadas 
