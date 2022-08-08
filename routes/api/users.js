@@ -1,9 +1,13 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
+const sgMail = require('@sendgrid/mail');
+require("dotenv").config();
+sgMail.setApiKey(process.env.SENDGRID_API);
 
-const { create, getByEmail, updateUser, getAll, getById, updateIsActive } = require('../../models/user.model');
+const { create, getByEmail, updateUser, getAll, getById, updateIsActive, updatePassword, deleteToken, updateToken, getByToken } = require('../../models/user.model');
 const { createToken } = require('../../helpers/utils');
+const { sendMail } = require('../../helpers/email');
 
 router.get('/', async (req, res) => {
   getAll()
@@ -94,6 +98,53 @@ router.post('/login', async (req, res) => {
     });
   } catch (err) {
     res.json({ err: err.message });
+  }
+});
+router.post('/recoverPassword', async (req, res) => {
+  try {
+    const user = await getByEmail(req.body.email)
+    if (!user) {
+      return res.json({ err: 'Email incorrecto' });
+    }
+    if (!user.isActive) {
+      return res.json({ err: 'Error consulta con el administador' });
+    }
+    const token = createToken(user)
+    await updateToken(req.body.email, token)
+    res.json({
+      message: 'Consulte su email para obtener la nueva contraseña',
+      token: token
+    });
+    // to: req.body.email,
+    sendMail({
+      to: process.env.EMAIL,
+      from: process.env.EMAIL,
+      subject: 'Recuperación de contraseña',
+      text: 'Siga las instrucciones',
+      html: `<h3>Para obtener su nueva contraseña utilize el link:</h3>
+            <p> ${process.env.CLIENT_URL}/password/${token} </p>
+            `
+    }, 'Consulte su email para obtener la nueva contraseña')
+  } catch (err) {
+    res.json({ err: message })
+  }
+});
+
+router.post('/password/:token', async (req, res) => {
+  try {
+    const user = await getByToken(req.params.token)
+    if (!user) {
+      return res.json({ err: 'Token incorrecto' });
+    }
+    if (!user.isActive) {
+      return res.json({ err: 'Error consulta con el administador' });
+    }
+    req.body.password = bcrypt.hashSync(req.body.password, 10)
+    await updatePassword(req.body.password, req.params.token)
+    res.json({ message: 'Contraseña actualizada correctamente', });
+    await deleteToken(user.id);
+  } catch (err) {
+    res.json({ err: err.message })
   }
 });
 

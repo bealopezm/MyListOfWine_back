@@ -154,3 +154,62 @@ Content-Type: application/json
   "name":"Rosas",
   "password": "12345"
 }
+
+###
+POST http://localhost:3000/api/users/recoverPassword
+Content-Type: application/json
+
+{
+  "email": "rosa@gmail.com"
+}
+###
+POST http://localhost:3000/api/users/password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4LCJpYXQiOjE2NTk5NTg3NzV9.95EcIx5Zs7MWpgM4vHY_PcnEfbgjUQpEojdFZ6lyrcI
+Content-Type: application/json
+
+{
+  "password": "1235"
+}
+
+###
+
+GET http://localhost:3000/api/type
+###
+GET http://localhost:3000/api/type/1
+###
+POST http://localhost:3000/api/type
+Content-Type: application/json
+
+{
+  "name":"Amor"
+}
+
+###
+
+PUT http://localhost:3000/api/type/1
+Content-Type: application/json
+
+{
+  "name":"Rosa"
+}
+
+###
+
+GET http://localhost:3000/api/grape
+###
+GET http://localhost:3000/api/grape/1
+###
+POST http://localhost:3000/api/grape
+Content-Type: application/json
+
+{
+  "name":"Amor"
+}
+
+###
+
+PUT http://localhost:3000/api/grape/1
+Content-Type: application/json
+
+{
+  "name":"Moscatel"
+}

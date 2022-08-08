@@ -24,6 +24,21 @@ const getById = (pId) => {
   return executeQueryOne('select user.id, user.name, user.email, user.isActive from user where user.id = ?', [pId]);
 }
 
+const updatePassword = (password, token) => {
+  return executeQuery('update user set password = ? where token = ?', [password, token]);
+}
+const getByToken = (token) => {
+  return executeQueryOne('select * from user where token = ?', [token]);
+}
+
+const updateToken = (userEmail, token) => {
+  return executeQuery('update user set token = ? where email = ?', [token, userEmail]);
+}
+
+const deleteToken = (pId) => {
+  return executeQuery('update user set token = null where id = ?;', [pId]);
+}
+
 module.exports = {
-  create, updateUser, getByEmail, getById, getAll, updateIsActive
+  create, updateUser, getByEmail, getById, getAll, updateIsActive, updatePassword, updateToken, deleteToken, getByToken
 }
