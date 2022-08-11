@@ -7,9 +7,10 @@ sgMail.setApiKey(process.env.SENDGRID_API);
 
 const { create, getByEmail, updateUser, getAll, getById, updateIsActive, updatePassword, deleteToken, updateToken, getByToken } = require('../../models/user.model');
 const { createToken } = require('../../helpers/utils');
+const { verifyToken } = require('../../helpers/middlewares');
 const { sendMail } = require('../../helpers/email');
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   getAll()
     .then(result => {
       result = result.map(user => ({
@@ -22,7 +23,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   try {
     const result = await getById(req.params.id)
     res.json(result)
@@ -31,7 +32,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/userLoged/id', async (req, res) => {
+router.get('/userLoged/id', verifyToken, async (req, res) => {
   try {
     const result = await getById(req.user.id)
     res.json(result)
@@ -100,6 +101,7 @@ router.post('/login', async (req, res) => {
     res.json({ err: err.message });
   }
 });
+
 router.post('/recoverPassword', async (req, res) => {
   try {
     const user = await getByEmail(req.body.email)
@@ -148,7 +150,7 @@ router.post('/password/:token', async (req, res) => {
   }
 });
 
-router.put('/status/:userId', async (req, res) => {
+router.put('/status/:userId', verifyToken, async (req, res) => {
   try {
     await updateIsActive(req.params.userId, req.body.isActive)
     res.json({ message: 'Estado actualizado' })
@@ -157,7 +159,7 @@ router.put('/status/:userId', async (req, res) => {
   }
 });
 
-router.put('/:userId', async (req, res) => {
+router.put('/:userId', verifyToken, async (req, res) => {
   try {
     req.body.password = bcrypt.hashSync(req.body.password, 10)
     await updateUser(req.body)
