@@ -11,8 +11,7 @@ Content-Type: application/json
   "photo":"www.fffff.es",
   "Origin_id":1,
   "WineCellar_id":1,
-"Type_id":4,
-"Grape_id":1 
+  "Type_id":4,
 }
 
 ###
@@ -30,6 +29,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/api/wineHasUser/user/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 
 ###
 GET http://localhost:3000/api/wineHasUser/1
@@ -126,7 +126,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/api/users
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjAyMzE0NzB9.8eoo7Et8ztCFRJi1cn-1VG2IHItE08h_BicIV_Aps8c
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 
 ###
 GET http://localhost:3000/api/users/1
