@@ -1,4 +1,5 @@
 GET http://localhost:3000/api/wine
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 ###
 GET http://localhost:3000/api/wine/2
 ###
@@ -36,10 +37,11 @@ GET http://localhost:3000/api/wineHasUser/1
 
 ###
 POST http://localhost:3000/api/wineHasUser
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 Content-Type: application/json
 
 {
-  "Wine_id":2,
+  "Wine_id":1,
   "User_id":1,
   "favorite":false,
   "taste":true
