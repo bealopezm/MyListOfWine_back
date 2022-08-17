@@ -1,9 +1,13 @@
 GET http://localhost:3000/api/wine
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 ###
+GET http://localhost:3000/api/wine/name/Rosa
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
+###
 GET http://localhost:3000/api/wine/2
 ###
 POST http://localhost:3000/api/wine
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 Content-Type: application/json
 
 {
@@ -12,7 +16,7 @@ Content-Type: application/json
   "photo":"www.fffff.es",
   "Origin_id":1,
   "WineCellar_id":1,
-  "Type_id":4,
+  "Type_id":4
 }
 
 ###
@@ -37,14 +41,12 @@ GET http://localhost:3000/api/wineHasUser/1
 
 ###
 POST http://localhost:3000/api/wineHasUser
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE2NjA3NTUyOTF9.0gW8j-TRhFtxvq3WdCozxoiQakFp5aTVjilTqlz0cgs
 Content-Type: application/json
 
 {
-  "Wine_id":1,
-  "User_id":1,
-  "favorite":false,
-  "taste":true
+  "Wine_id":2,
+  "User_id":2
 }
 
 ###
@@ -132,12 +134,13 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2
 
 ###
 GET http://localhost:3000/api/users/1
+
 ###
 POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "rosa@gmail.com",
+  "email": "amalia@gmail.com",
   "password": "12345"
 }
 

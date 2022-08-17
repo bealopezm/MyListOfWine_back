@@ -7,8 +7,8 @@ const getById = (pId) => {
   return executeQueryOne('select * from wine_has_user where id = ?', [pId]);
 };
 
-const create = ({ Wine_id, User_id, favorite, taste }) => {
-  return executeQuery('insert into wine_has_user (Wine_id, User_id, favorite, taste) values (?,?,?,?)', [Wine_id, User_id, favorite, taste]);
+const create = ({ Wine_id, User_id }) => {
+  return executeQuery('insert into wine_has_user (Wine_id, User_id) values (?,?)', [Wine_id, User_id]);
 };
 
 const updateFavorite = (pId, favorite) => {

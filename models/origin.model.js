@@ -7,12 +7,12 @@ const getById = (id) => {
   return executeQueryOne('select * from origin where id = ?', [id]);
 };
 
-const create = ({ type, name }) => {
-  return executeQuery('insert into origin (type, name) values (?,?)', [type, name]);
+const create = ({ name }) => {
+  return executeQuery('insert into origin ( name) values (?,?)', [name]);
 };
 
-const update = (pId, { type, name }) => {
-  return executeQuery('update origin set type = ?, name = ? where id = ?', [type, name, pId]);
+const update = (pId, { name }) => {
+  return executeQuery('update origin set name = ? where id = ?', [name, pId]);
 };
 
 module.exports = {

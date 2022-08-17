@@ -18,7 +18,6 @@ router.get('/:id', verifyToken, (req, res) => {
 router.post('/', verifyToken, async (req, res) => {
   try {
     await create(req.body);
-    console.log(typeof (req.body.tasted))
     res.json("Nueva relacion vino-usuario creada");
   } catch (err) {
     res.json({ err: err.message });
