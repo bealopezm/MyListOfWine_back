@@ -12,8 +12,12 @@ const getByEmail = (email) => {
   return executeQueryOne('select * from user where email = ?', [email]);
 }
 
-const updateUser = ({ id, email, name, password }) => {
-  return executeQuery('update user set  name=?, email=?, password=?  where id=?', [name, email, password, id]);
+const updateUserIsActive = ({ email, name, password, isActive }) => {
+  return executeQuery('update user set  name=?, password=?, isActive=? where email=?', [name, password, isActive, email]);
+}
+
+const updateUser = ({ id, email, name }) => {
+  return executeQuery('update user set  name=?, email=? where id=?', [name, email, id]);
 }
 
 const updateIsActive = (userId, isActive) => {
@@ -40,5 +44,5 @@ const deleteToken = (pId) => {
 }
 
 module.exports = {
-  create, updateUser, getByEmail, getById, getAll, updateIsActive, updatePassword, updateToken, deleteToken, getByToken
+  create, updateUser, getByEmail, getById, getAll, updateIsActive, updatePassword, updateToken, deleteToken, getByToken, updateUserIsActive
 }

@@ -5,7 +5,7 @@ const sgMail = require('@sendgrid/mail');
 require("dotenv").config();
 sgMail.setApiKey(process.env.SENDGRID_API);
 
-const { create, getByEmail, updateUser, getAll, getById, updateIsActive, updatePassword, deleteToken, updateToken, getByToken } = require('../../models/user.model');
+const { create, getByEmail, updateUser, getAll, getById, updateIsActive, updatePassword, deleteToken, updateToken, getByToken, updateUserIsActive } = require('../../models/user.model');
 const { createToken } = require('../../helpers/utils');
 const { verifyToken } = require('../../helpers/middlewares');
 const { sendMail } = require('../../helpers/email');
@@ -22,6 +22,15 @@ router.get('/', verifyToken, async (req, res) => {
     .catch(err => res.json({ err: err.message }));
 });
 
+
+router.get('/email/:email', async (req, res) => {
+  try {
+    const result = await getByEmail(req.params.email)
+    res.json(result)
+  } catch (err) {
+    res.json({ err: err.message })
+  }
+});
 
 router.get('/:id', verifyToken, async (req, res) => {
   try {
@@ -78,6 +87,16 @@ router.post('/register',
     }
   }
 );
+
+router.post('/recoverUser', async (req, res) => {
+  try {
+    req.body.password = bcrypt.hashSync(req.body.password, 10)
+    await updateUserIsActive(req.body)
+    res.json({ message: 'Usuario registrado' })
+  } catch (err) {
+    res.json({ err: err.message })
+  }
+});
 
 
 router.post('/login', async (req, res) => {
@@ -150,6 +169,8 @@ router.post('/password/:token', async (req, res) => {
   }
 });
 
+
+
 router.put('/status/:userId', verifyToken, async (req, res) => {
   try {
     await updateIsActive(req.params.userId, req.body.isActive)
@@ -159,9 +180,9 @@ router.put('/status/:userId', verifyToken, async (req, res) => {
   }
 });
 
+
 router.put('/:userId', verifyToken, async (req, res) => {
   try {
-    req.body.password = bcrypt.hashSync(req.body.password, 10)
     await updateUser(req.body)
     res.json({ message: 'Usuario actualizado' })
   } catch (err) {
