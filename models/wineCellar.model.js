@@ -7,8 +7,8 @@ const getById = (id) => {
   return executeQueryOne('select * from wineCellar where id = ?', [id]);
 };
 
-const create = ({ name, Origin_id }) => {
-  return executeQuery('insert into wineCellar (name, Origin_id) values (?,?)', [name, Origin_id]);
+const create = ({ name }) => {
+  return executeQuery('insert into wineCellar (name) values (?)', [name]);
 };
 
 const update = (pId, { name, Origin_id }) => {

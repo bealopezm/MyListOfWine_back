@@ -103,8 +103,7 @@ POST http://localhost:3000/api/wineCellar
 Content-Type: application/json
 
 {
-  "name":"Romero Gutierrez",
-  "Origin_id": 2
+  "name":"Romero Gutierrez"
 }
 
 ###

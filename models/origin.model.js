@@ -8,7 +8,7 @@ const getById = (id) => {
 };
 
 const create = ({ name }) => {
-  return executeQuery('insert into origin ( name) values (?,?)', [name]);
+  return executeQuery('insert into origin ( name) values (?)', [name]);
 };
 
 const update = (pId, { name }) => {
