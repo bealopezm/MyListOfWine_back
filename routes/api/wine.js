@@ -26,16 +26,14 @@ router.get('/:id', verifyToken, (req, res) => {
 });
 
 router.post('/', verifyToken, upload.single('photo'), async (req, res) => {
-  console.log(req.file)
-  const file = req.file.mimetype.split('/')[1];
-  const newName = `${req.file.filename}.${file}`;
-  const newPath = `${req.file.path}.${file}`;
+  const extension = req.file.mimetype.split('/')[1];
+  const newName = `${req.file.filename}.${extension}`;
+  const newPath = `${req.file.path}.${extension}`;
   fs.renameSync(req.file.path, newPath);
 
   req.body.photo = newName;
 
   try {
-    console.log(req.body)
     await create(req.body);
     res.json({ message: "Nuevo vino añadido" });
   } catch (err) {

@@ -88,15 +88,25 @@ router.post('/register',
   }
 );
 
-router.post('/recoverUser', async (req, res) => {
-  try {
-    req.body.password = bcrypt.hashSync(req.body.password, 10)
-    await updateUserIsActive(req.body)
-    res.json({ message: 'Usuario registrado' })
-  } catch (err) {
-    res.json({ err: err.message })
-  }
-});
+router.post('/recoverUser',
+  body('email')
+    .isEmail()
+    .withMessage('El email debe tener un formato correcto'),
+  body('name')
+    .exists()
+    .withMessage('El campo name es requerido'),
+  body('password')
+    .exists()
+    .withMessage('El campo password es requerido'),
+  async (req, res) => {
+    try {
+      req.body.password = bcrypt.hashSync(req.body.password, 10)
+      await updateUserIsActive(req.body)
+      res.json({ message: 'Usuario registrado' })
+    } catch (err) {
+      res.json({ err: err.message })
+    }
+  });
 
 
 router.post('/login', async (req, res) => {
@@ -121,64 +131,76 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/recoverPassword', async (req, res) => {
-  try {
-    const user = await getByEmail(req.body.email)
-    if (!user) {
-      return res.json({ err: 'Email incorrecto' });
-    }
-    if (!user.isActive) {
-      return res.json({ err: 'Error consulta con el administador' });
-    }
-    const token = createToken(user)
-    await updateToken(req.body.email, token)
-    res.json({
-      message: 'Consulte su email para obtener la nueva contraseña',
-      token: token
-    });
-    // to: req.body.email,
-    sendMail({
-      to: process.env.EMAIL,
-      from: process.env.EMAIL,
-      subject: 'Recuperación de contraseña',
-      text: 'Siga las instrucciones',
-      html: `<h3>Para obtener su nueva contraseña utilize el link:</h3>
+router.post('/recoverPassword',
+  body('email')
+    .exists(),
+  async (req, res) => {
+    try {
+      const user = await getByEmail(req.body.email)
+      if (!user) {
+        return res.json({ err: 'Email incorrecto' });
+      }
+      if (!user.isActive) {
+        return res.json({ err: 'Error consulta con el administador' });
+      }
+      const token = createToken(user)
+      await updateToken(req.body.email, token)
+      res.json({
+        message: 'Consulte su email para obtener la nueva contraseña',
+        token: token
+      });
+      // to: req.body.email,
+      sendMail({
+        to: process.env.EMAIL,
+        from: process.env.EMAIL,
+        subject: 'Recuperación de contraseña',
+        text: 'Siga las instrucciones',
+        html: `<h3>Para obtener su nueva contraseña utilize el link:</h3>
             <p> ${process.env.CLIENT_URL}/password/${token} </p>
             `
-    }, 'Consulte su email para obtener la nueva contraseña')
-  } catch (err) {
-    res.json({ err: message })
-  }
-});
-
-router.post('/password/:token', async (req, res) => {
-  try {
-    const user = await getByToken(req.params.token)
-    if (!user) {
-      return res.json({ err: 'Token incorrecto' });
+      }, 'Consulte su email para obtener la nueva contraseña')
+    } catch (err) {
+      res.json({ err: message })
     }
-    if (!user.isActive) {
-      return res.json({ err: 'Error consulta con el administador' });
+  });
+
+router.post('/password/:token',
+  body('password')
+    .isLength({ min: 3 })
+    .exists(),
+  async (req, res) => {
+    try {
+      const user = await getByToken(req.params.token)
+      if (!user) {
+        return res.json({ err: 'Token incorrecto' });
+      }
+      if (!user.isActive) {
+        return res.json({ err: 'Error consulta con el administador' });
+      }
+      req.body.password = bcrypt.hashSync(req.body.password, 10)
+      await updatePassword(req.body.password, req.params.token)
+      res.json({ message: 'Contraseña actualizada correctamente', });
+      await deleteToken(user.id);
+    } catch (err) {
+      res.json({ err: err.message })
     }
-    req.body.password = bcrypt.hashSync(req.body.password, 10)
-    await updatePassword(req.body.password, req.params.token)
-    res.json({ message: 'Contraseña actualizada correctamente', });
-    await deleteToken(user.id);
-  } catch (err) {
-    res.json({ err: err.message })
-  }
-});
+  });
 
-
-
-router.put('/status/:userId', verifyToken, async (req, res) => {
-  try {
-    await updateIsActive(req.params.userId, req.body.isActive)
-    res.json({ message: 'Estado actualizado' })
-  } catch (err) {
-    res.json({ err: err.message })
-  }
-});
+router.put('/status/:userId', verifyToken,
+  body('email')
+    .isEmail()
+    .withMessage('El email debe tener un formato correcto'),
+  body('name')
+    .exists()
+    .withMessage('El campo name es requerido'),
+  async (req, res) => {
+    try {
+      await updateIsActive(req.params.userId, req.body.isActive)
+      res.json({ message: 'Estado actualizado' })
+    } catch (err) {
+      res.json({ err: err.message })
+    }
+  });
 
 
 router.put('/:userId', verifyToken, async (req, res) => {
