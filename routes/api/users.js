@@ -166,8 +166,8 @@ router.post('/recoverPassword',
 
 router.post('/password/:token',
   body('password')
-    .isLength({ min: 3 })
-    .exists(),
+    .exists()
+    .isLength({ min: 3 }),
   async (req, res) => {
     try {
       const user = await getByToken(req.params.token)

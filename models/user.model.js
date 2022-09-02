@@ -25,7 +25,7 @@ const updateIsActive = (userId, isActive) => {
 }
 
 const getById = (pId) => {
-  return executeQueryOne('select user.id, user.name, user.email, user.isActive from user where user.id = ?', [pId]);
+  return executeQueryOne('select user.id, user.name, user.email, user.isActive, user.role from user where user.id = ?', [pId]);
 }
 
 const updatePassword = (password, token) => {
