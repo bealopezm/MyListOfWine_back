@@ -1,7 +1,22 @@
 GET http://localhost:3000/api/wine
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 ###
-GET http://localhost:3000/api/wine/name/Rosa
+GET http://localhost:3000/api/wine/name/Vino 02
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
+###
+GET http://localhost:3000/api/wine/listName/Vino
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
+###
+GET http://localhost:3000/api/wine/elaborationArea/Ár
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
+###
+GET http://localhost:3000/api/wine/type/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
+###
+GET http://localhost:3000/api/wine/wineCellar/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
+###
+GET http://localhost:3000/api/wine/origin/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NjA2Nzg4OTJ9.fL9etzCjX9a5GSPPWRopv8hBKNw_vYRGB-LpqdObQJM
 ###
 GET http://localhost:3000/api/wine/2

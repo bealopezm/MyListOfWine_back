@@ -4,7 +4,7 @@ const upload = multer({ dest: 'public/images' });
 const fs = require('fs');
 
 const { verifyToken } = require('../../helpers/middlewares');
-const { getAll, create, getById, update, getByName } = require('../../models/wine.model');
+const { getAll, create, getById, update, getByName, getByElaborationArea, getByListName, getBytype, getByOrigin, getByWineCellar } = require('../../models/wine.model');
 
 router.get('/', verifyToken, (req, res) => {
   getAll()
@@ -13,8 +13,39 @@ router.get('/', verifyToken, (req, res) => {
 });
 
 router.get('/name/:name', verifyToken, (req, res) => {
-  console.log(req.params.name)
   getByName(req.params.name)
+    .then(result => res.json(result))
+    .catch(err => res.json({ error: err.message }))
+});
+
+router.get('/listName/:name', verifyToken, (req, res) => {
+  const name = '%' + req.params.name + '%'
+  getByListName(name)
+    .then(result => res.json(result))
+    .catch(err => res.json({ error: err.message }))
+});
+
+router.get('/elaborationArea/:area', verifyToken, (req, res) => {
+  const area = '%' + req.params.area + '%'
+  getByElaborationArea(area)
+    .then(result => res.json(result))
+    .catch(err => res.json({ error: err.message }))
+});
+
+router.get('/type/:type', verifyToken, (req, res) => {
+  getBytype(req.params.type)
+    .then(result => res.json(result))
+    .catch(err => res.json({ error: err.message }))
+});
+
+router.get('/origin/:origin', verifyToken, (req, res) => {
+  getByOrigin(req.params.origin)
+    .then(result => res.json(result))
+    .catch(err => res.json({ error: err.message }))
+});
+
+router.get('/wineCellar/:wineCellar', verifyToken, (req, res) => {
+  getByWineCellar(req.params.wineCellar)
     .then(result => res.json(result))
     .catch(err => res.json({ error: err.message }))
 });
